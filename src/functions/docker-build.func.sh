@@ -18,7 +18,7 @@ set -e
 # Functions
 ########################################################################################################################
 
-    function build()
+    function Docker_Build()
     {
         local docker_image_name="${1}"
 
@@ -36,7 +36,7 @@ set -e
                 "${build_context}"
     }
 
-    function rebuild()
+    function Docker_Rebuild()
     {
         local docker_image_name="${1}"
 

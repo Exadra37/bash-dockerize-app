@@ -12,6 +12,7 @@
 # @link    Linkedin: https://uk.linkedin.com/in/exadra37
 # @link    Twitter:  https://twitter.com/Exadra37
 
+set -e
 
 ########################################################################################################################
 # Functions
@@ -33,4 +34,19 @@
                 --build-arg HOST_GID="${gid}" \
                 -t "${docker_image_name}" \
                 "${build_context}"
+    }
+
+    function rebuild()
+    {
+        local docker_image_name="${1}"
+
+        local build_context="${2}"
+
+        local uid=$( id -u )
+
+        local gid=$( id -g )
+
+        sudo docker rmi "${docker_image_name}"
+
+        build "${docker_image_name}" "${build_context}"
     }

@@ -1,7 +1,7 @@
 #!/bin/bash
 # @package exadra37-bash/dockerize-app
 # @link    https://gitlab.com/u/exadra37-bash/dockerize-app
-# @since   2017/03/08
+# @since   2017/03/10
 # @license GPL-3.0
 # @author  Exadra37(Paulo Silva) <exadra37ingmailpointcom>
 #
@@ -15,23 +15,25 @@
 set -e
 
 ########################################################################################################################
+# Sourcing
+########################################################################################################################
+
+    ebda_functions_dir=$(cd "$( dirname "${BASH_SOURCE}" )" && pwd )
+
+    source "${ebda_functions_dir}"/docker-build.func.sh
+
+
+########################################################################################################################
 # Functions
 ########################################################################################################################
 
-    function Docker_Build()
+    function Docker_Rebuild()
     {
         local _image_name="${1?}"
 
         local _build_context="${2?}"
 
-        local _uid=$( id -u )
+        sudo docker rmi "${_image_name}"
 
-        local _gid=$( id -g )
-
-        sudo docker build \
-                --build-arg HOST_USER="${USER}" \
-                --build-arg HOST_UID="${_uid}" \
-                --build-arg HOST_GID="${_gid}" \
-                --tag "${_image_name}" \
-                "${_build_context}"
+        Docker_Build "${_image_name}" "${_build_context}"
     }

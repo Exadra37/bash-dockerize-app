@@ -1,8 +1,19 @@
 {
     "name": "exadra37-bash/dockerize-app",
-    "description": "All my repositories will have this one as starting point.",
+    "description": "A set of functions to help dockerize any App with a UI outside the terminal.",
     "keywords": [
-        "Exadra37"
+        "Exadra37",
+        "bash",
+        "bash functions",
+        "bash package manager",
+        "bash required packages",
+        "bash bin package installer",
+        "bash docker",
+        "bash dockerize",
+        "bash dockerize app",
+        "docker",
+        "docker container",
+        "dockerize app"
     ],
     "homepage": "https://gitlab.com/exadra37-bash/dockerize-app",
     "license": "GPL-3.0",

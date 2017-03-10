@@ -20,7 +20,7 @@ set -e
 
     ebda_functions_dir=$(cd "$( dirname "${BASH_SOURCE}" )" && pwd )
 
-    source "${ebda_functions_dir}"/docker-build.func.sh
+    source "${ebda_functions_dir}"/docker-build.source.sh
 
 
 ########################################################################################################################

@@ -20,10 +20,10 @@ set -e
 
     ebda_functions_dir=$(cd "$( dirname "${BASH_SOURCE}" )" && pwd )
 
-    source "${ebda_functions_dir}"/docker-build.func.sh
-    source "${ebda_functions_dir}"/../../vendor/exadra37-bash/pretty-print/src/functions/raw-color-print.func.sh
-    source "${ebda_functions_dir}"/../../vendor/exadra37-bash/x11-server/src/functions/x11-server-authority.func.sh
-    source "${ebda_functions_dir}"/../../vendor/exadra37-bash/docker-validator/src/functions/validate-images.func.sh
+    source "${ebda_functions_dir}"/docker-build.source.sh
+    source "${ebda_functions_dir}"/../../vendor/exadra37-bash/pretty-print/src/functions/raw-color-print.source.sh
+    source "${ebda_functions_dir}"/../../vendor/exadra37-bash/x11-server/src/functions/x11-server-authority.source.sh
+    source "${ebda_functions_dir}"/../../vendor/exadra37-bash/docker-validator/src/functions/validate-images.source.sh
 
 
 ########################################################################################################################

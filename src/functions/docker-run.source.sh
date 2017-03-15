@@ -20,7 +20,7 @@ set -e
 
     ebda_functions_dir=$(cd "$( dirname "${BASH_SOURCE}" )" && pwd )
 
-    source "${ebda_functions_dir}"/docker-build.source.sh
+    source "${ebda_functions_dir}"/docker-user-build.source.sh
     source "${ebda_functions_dir}"/../../vendor/exadra37-bash/pretty-print/src/functions/raw-color-print.source.sh
     source "${ebda_functions_dir}"/../../vendor/exadra37-bash/x11-server/src/functions/x11-server-authority.source.sh
     source "${ebda_functions_dir}"/../../vendor/exadra37-bash/docker-validator/src/functions/validate-images.source.sh
@@ -37,38 +37,42 @@ set -e
             # location to current x11 server socket in our machine
             local _x11_socket=/tmp/.X11-unix
 
+            local _container_user="${USER}"
+
 
         ### VARIABLES ARGUMENTS ###
 
             local _image_name="${1?}"
 
-            local _build_context="${2?}"
+            local _image_tag="${2?}"
 
-            local _cli_name="${3?}"
+            local _build_context="${3?}"
 
-            local _volumes="${4}"
+            local _cli_name="${4?}"
 
-            local _command="${5}"
+            local _volumes="${5}"
 
-            local _arguments="${6}"
+            local _command="${6}"
+
+            local _arguments="${7}"
 
 
         ### VARIABLES COMPOSITION ###
 
             local _timestamp=$( date +"%s" )
 
-            # temporary x11 authority file to allow the docker container to talk with the x11 server in our machhine
-            local _x11_authority_file=/tmp/.dockerize-app/x11-authority_"${_timestamp}"
-
             # from word vendor-name/image-name we will get just the image-name plus the time stamp
             local _container_name="${_image_name##*/}_${_timestamp}"
+
+            # temporary x11 authority file to allow the docker container to talk with the x11 server in our machhine
+            local _x11_authority_file=/tmp/.dockerize-app/"${_container_name}"/x11-authority
 
 
         ### VALIDATIONS ###
 
             if Docker_Image_Does_Not_Exist "${_image_name}"
                 then
-                    Docker_Build "${_image_name}" "${_build_context}"
+                    Docker_User_Build "${_image_name}" "${_image_tag}" "${_build_context}"
             fi
 
 
@@ -90,7 +94,7 @@ set -e
                     --interactive \
                     --env="XAUTHORITY=${_x11_authority_file}" \
                     --env="DISPLAY" \
-                    --user="${USER}" \
+                    --user="${_container_user}" \
                     --name="${_container_name}" \
                     --volume="${_x11_socket}":"${_x11_socket}":ro \
                     --volume="${_x11_authority_file}":"${_x11_authority_file}":ro \

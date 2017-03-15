@@ -22,16 +22,11 @@ set -e
     {
         local _image_name="${1?}"
 
-        local _build_context="${2?}"
+        local _image_tag="${2?}"
 
-        local _uid=$( id -u )
-
-        local _gid=$( id -g )
+        local _build_context="${3?}"
 
         sudo docker build \
-                --build-arg HOST_USER="${USER}" \
-                --build-arg HOST_UID="${_uid}" \
-                --build-arg HOST_GID="${_gid}" \
-                --tag "${_image_name}" \
+                --tag "${_image_name}:${_image_tag}" \
                 "${_build_context}"
     }
